@@ -580,6 +580,26 @@ class Api(object):
         else:
             return PlaylistListResponse.from_dict(data)
 
+    def create_playlist(
+        self,
+        *,
+        parts: Optional[Union[str, list, tuple, set]] = None,
+        hl: Optional[str] = "en_US",
+        return_json: Optional[bool] = False,
+    ):
+        args = {
+            "part": enf_parts(resource="playlists", value=parts),
+            "hl": hl,
+        }
+
+        resp = self._request(resource="playlists", method="POST", args=args)
+        data = self._parse_response(resp)
+
+        if return_json:
+            return data
+        else:
+            return PlaylistListResponse.from_dict(data)
+
     def get_playlists(
         self,
         *,
